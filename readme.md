@@ -15,7 +15,11 @@ FastEM 广告管理系统许可协议
 --------------------------
 
 
-将采用GPL V3协议和商业许可证发行。
+将采用GPL V3协议和商业许可证发行，参见LICENSE.txt及附带的GPLV3.txt。
+
+FastEM 广告管理系统采用了Zend Framework框架，所以附带了一份BSD许可协议，参见ZendFramework_LICENSE.txt。
+
+商业许可证参见 BIZ_LICENSE.txt ，购买商业许可证请联系netroby@netroby.com
 
 用户可以自由选择一种许可证。
 
@@ -28,7 +32,7 @@ FastEM 项目招募
 
 您可以通过下面的方式参与到FastEM项目中来。
 
-1. 为FastEM提供资金赞助
+1. 为FastEM提供资金赞助 [netroby@netroby.com](mailto:netroby@netroby.com)
 2. 帮助开发，请关注[https://github.com/netroby/fastem](https://github.com/netroby/fastem)
 3. 提交需求建议，请发送邮件至：[netroby@netroby.com](mailto:netroby@netroby.com)
 4. 提交BUG反馈，请在这里提交：[https://github.com/netroby/fastem/issues](https://github.com/netroby/fastem/issues)
