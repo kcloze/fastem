@@ -17,11 +17,11 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Image.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Image.php 24146 2011-06-15 13:15:22Z adamlundrigan $
  */
 
 /** @see Zend_Captcha_Word */
-// require_once 'Zend/Captcha/Word.php';
+require_once 'Zend/Captcha/Word.php';
 
 /**
  * Image-based captcha element
@@ -446,24 +446,24 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     protected function _generateImage($id, $word)
     {
         if (!extension_loaded("gd")) {
-            // require_once 'Zend/Captcha/Exception.php';
+            require_once 'Zend/Captcha/Exception.php';
             throw new Zend_Captcha_Exception("Image CAPTCHA requires GD extension");
         }
 
         if (!function_exists("imagepng")) {
-            // require_once 'Zend/Captcha/Exception.php';
+            require_once 'Zend/Captcha/Exception.php';
             throw new Zend_Captcha_Exception("Image CAPTCHA requires PNG support");
         }
 
         if (!function_exists("imageftbbox")) {
-            // require_once 'Zend/Captcha/Exception.php';
+            require_once 'Zend/Captcha/Exception.php';
             throw new Zend_Captcha_Exception("Image CAPTCHA requires FT fonts support");
         }
 
         $font = $this->getFont();
 
         if (empty($font)) {
-            // require_once 'Zend/Captcha/Exception.php';
+            require_once 'Zend/Captcha/Exception.php';
             throw new Zend_Captcha_Exception("Image CAPTCHA requires font");
         }
 
@@ -477,7 +477,7 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
         } else {
             $img = imagecreatefrompng($this->_startImage);
             if(!$img) {
-                // require_once 'Zend/Captcha/Exception.php';
+                require_once 'Zend/Captcha/Exception.php';
                 throw new Zend_Captcha_Exception("Can not load start image");
             }
             $w = imagesx($img);
@@ -599,7 +599,11 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
      */
     public function render(Zend_View_Interface $view = null, $element = null)
     {
+        $endTag = ' />';
+        if (($view instanceof Zend_View_Abstract) && !$view->doctype()->isXhtml()) {
+            $endTag = '>';
+        }
         return '<img width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" alt="' . $this->getImgAlt()
-             . '" src="' . $this->getImgUrl() . $this->getId() . $this->getSuffix() . '" />';
+             . '" src="' . $this->getImgUrl() . $this->getId() . $this->getSuffix() . '"' . $endTag;
     }
 }

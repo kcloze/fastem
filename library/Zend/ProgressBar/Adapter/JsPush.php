@@ -14,18 +14,18 @@
  * @package    Zend_ProgressBar
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: JsPush.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: JsPush.php 23953 2011-05-03 05:47:39Z ralph $
  */
 
 /**
  * @see Zend_Json
  */
-// require_once 'Zend/Json.php';
+require_once 'Zend/Json.php';
 
 /**
  * @see Zend_ProgressBar_Adapter
  */
-// require_once 'Zend/ProgressBar/Adapter.php';
+require_once 'Zend/ProgressBar/Adapter.php';
 
 /**
  * Zend_ProgressBar_Adapter_JsPush offers a simple method for updating a

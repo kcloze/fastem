@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-// require_once 'Zend/Http/UserAgent/AbstractDevice.php';
+require_once 'Zend/Http/UserAgent/AbstractDevice.php';
 
 /**
  * Mobile browser type matcher
@@ -76,7 +76,6 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
         'htc-',
         'htc_',
         'iemobile',
-        'ipad',
         'iris',
         'j-phone',
         'kddi',
@@ -112,7 +111,6 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
         'novarra-vision',
         'nuvifone',
         'openweb',
-        'oper',
         'opwv',
         'palmsource',
         'pdxgw',

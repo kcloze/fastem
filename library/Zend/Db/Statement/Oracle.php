@@ -17,13 +17,13 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Oracle.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Oracle.php 23959 2011-05-03 10:45:47Z yoshida@zend.co.jp $
  */
 
 /**
  * @see Zend_Db_Statement
  */
-// require_once 'Zend/Db/Statement.php';
+require_once 'Zend/Db/Statement.php';
 
 /**
  * Extends for Oracle.
@@ -87,12 +87,12 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     protected function _prepare($sql)
     {
         $connection = $this->_adapter->getConnection();
-        $this->_stmt = oci_parse($connection, $sql);
+        $this->_stmt = @oci_parse($connection, $sql);
         if (!$this->_stmt) {
             /**
              * @see Zend_Db_Statement_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($connection));
         }
     }
@@ -125,7 +125,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
 
@@ -249,7 +249,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 /**
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
-                // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+                require_once 'Zend/Db/Statement/Oracle/Exception.php';
                 throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
             }
         }
@@ -259,7 +259,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
 
@@ -323,7 +323,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 /**
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
-                // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+                require_once 'Zend/Db/Statement/Oracle/Exception.php';
                 throw new Zend_Db_Statement_Oracle_Exception(
                     array(
                         'code'    => 'HYC00',
@@ -337,7 +337,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception($error);
         }
 
@@ -374,7 +374,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 /**
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
-                // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+                require_once 'Zend/Db/Statement/Oracle/Exception.php';
                 throw new Zend_Db_Statement_Oracle_Exception(
                     array(
                         'code'    => 'HYC00',
@@ -402,7 +402,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 /**
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
-                // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+                require_once 'Zend/Db/Statement/Oracle/Exception.php';
                 throw new Zend_Db_Statement_Oracle_Exception(
                     array(
                         'code'    => 'HYC00',
@@ -419,7 +419,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                     /**
                      * @see Zend_Db_Adapter_Oracle_Exception
                      */
-                    // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+                    require_once 'Zend/Db/Statement/Oracle/Exception.php';
                     throw new Zend_Db_Statement_Oracle_Exception($error);
                 }
                 if (!$rows) {
@@ -442,7 +442,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 /**
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
-                // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+                require_once 'Zend/Db/Statement/Oracle/Exception.php';
                 throw new Zend_Db_Statement_Oracle_Exception($error);
             }
         }
@@ -472,7 +472,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception($error);
         }
 
@@ -481,7 +481,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
 
@@ -516,7 +516,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception($error);
         }
 
@@ -538,7 +538,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
         /**
          * @see Zend_Db_Statement_Oracle_Exception
          */
-        // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+        require_once 'Zend/Db/Statement/Oracle/Exception.php';
         throw new Zend_Db_Statement_Oracle_Exception(
             array(
                 'code'    => 'HYC00',
@@ -567,7 +567,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
-            // require_once 'Zend/Db/Statement/Oracle/Exception.php';
+            require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
 

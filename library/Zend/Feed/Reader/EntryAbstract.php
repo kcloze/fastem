@@ -16,7 +16,7 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: EntryAbstract.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: EntryAbstract.php 23953 2011-05-03 05:47:39Z ralph $
  */
 
 /**
@@ -211,7 +211,7 @@ abstract class Zend_Feed_Reader_EntryAbstract
                 return call_user_func_array(array($extension, $method), $args);
             }
         }
-        // require_once 'Zend/Feed/Exception.php';
+        require_once 'Zend/Feed/Exception.php';
         throw new Zend_Feed_Exception('Method: ' . $method
             . 'does not exist and could not be located on a registered Extension');
     }

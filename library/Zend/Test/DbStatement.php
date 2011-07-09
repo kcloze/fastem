@@ -17,13 +17,13 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbStatement.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DbStatement.php 23953 2011-05-03 05:47:39Z ralph $
  */
 
 /**
  * @see Zend_Db_Statement_Interface
  */
-// require_once "Zend/Db/Statement/Interface.php";
+require_once "Zend/Db/Statement/Interface.php";
 
 /**
  * Testing Database Statement that acts as a stack to SQL resultsets.
@@ -305,7 +305,7 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
             return false;
         } else {
             if(count($row) < $col) {
-                // require_once "Zend/Db/Statement/Exception.php";
+                require_once "Zend/Db/Statement/Exception.php";
                 throw new Zend_Db_Statement_Exception(
                     "Column Position '".$col."' is out of bounds."
                 );

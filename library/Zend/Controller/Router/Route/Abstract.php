@@ -16,14 +16,14 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Abstract.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Abstract.php 24182 2011-07-03 13:43:05Z adamlundrigan $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
  * @see Zend_Controller_Router_Route_Interface
  */
-// require_once 'Zend/Controller/Router/Route/Interface.php';
+require_once 'Zend/Controller/Router/Route/Interface.php';
 
 /**
  * Abstract Route
@@ -37,6 +37,11 @@
  */
 abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_Router_Route_Interface
 {
+    /**
+     * URI delimiter
+     */
+    const URI_DELIMITER = '/';
+    
     /**
      * Wether this route is abstract or not
      *
@@ -106,7 +111,7 @@ abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_
      */
     public function chain(Zend_Controller_Router_Route_Abstract $route, $separator = '/')
     {
-        // require_once 'Zend/Controller/Router/Route/Chain.php';
+        require_once 'Zend/Controller/Router/Route/Chain.php';
 
         $chain = new Zend_Controller_Router_Route_Chain();
         $chain->chain($this)->chain($route, $separator);

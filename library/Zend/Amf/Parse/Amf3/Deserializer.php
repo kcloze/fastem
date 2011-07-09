@@ -17,14 +17,14 @@
  * @subpackage Parse_Amf3
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Deserializer.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Deserializer.php 24138 2011-06-14 01:38:34Z adamlundrigan $
  */
 
 /** Zend_Amf_Parse_Deserializer */
-// require_once 'Zend/Amf/Parse/Deserializer.php';
+require_once 'Zend/Amf/Parse/Deserializer.php';
 
 /** Zend_Amf_Parse_TypeLoader */
-// require_once 'Zend/Amf/Parse/TypeLoader.php';
+require_once 'Zend/Amf/Parse/TypeLoader.php';
 
 /**
  * Read an AMF3 input stream and convert it into PHP data types.
@@ -107,7 +107,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
             case Zend_Amf_Constants::AMF3_BYTEARRAY:
                  return $this->readString();
             default:
-                // require_once 'Zend/Amf/Exception.php';
+                require_once 'Zend/Amf/Exception.php';
                 throw new Zend_Amf_Exception('Unsupported type marker: ' . $typeMarker);
         }
     }
@@ -182,7 +182,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
             // reference string
             $stringReference = $stringReference >> 1;
             if ($stringReference >= count($this->_referenceStrings)) {
-                // require_once 'Zend/Amf/Exception.php';
+                require_once 'Zend/Amf/Exception.php';
                 throw new Zend_Amf_Exception('Undefined string reference: ' . $stringReference);
             }
             // reference string found
@@ -216,7 +216,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
         if (($dateReference & 0x01) == 0) {
             $dateReference = $dateReference >> 1;
             if ($dateReference>=count($this->_referenceObjects)) {
-                // require_once 'Zend/Amf/Exception.php';
+                require_once 'Zend/Amf/Exception.php';
                 throw new Zend_Amf_Exception('Undefined date reference: ' . $dateReference);
             }
             return $this->_referenceObjects[$dateReference];
@@ -224,8 +224,8 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
 
         $timestamp = floor($this->_stream->readDouble() / 1000);
 
-        // require_once 'Zend/Date.php';
-        $dateTime  = new Zend_Date((int) $timestamp);
+        require_once 'Zend/Date.php';
+        $dateTime  = new Zend_Date($timestamp);
         $this->_referenceObjects[] = $dateTime;
         return $dateTime;
     }
@@ -243,7 +243,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
         if (($arrayReference & 0x01)==0){
             $arrayReference = $arrayReference >> 1;
             if ($arrayReference>=count($this->_referenceObjects)) {
-                // require_once 'Zend/Amf/Exception.php';
+                require_once 'Zend/Amf/Exception.php';
                 throw new Zend_Amf_Exception('Unknow array reference: ' . $arrayReference);
             }
             return $this->_referenceObjects[$arrayReference];
@@ -286,7 +286,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
         if ($storedObject) {
             $ref = $traitsInfo;
             if (!isset($this->_referenceObjects[$ref])) {
-                // require_once 'Zend/Amf/Exception.php';
+                require_once 'Zend/Amf/Exception.php';
                 throw new Zend_Amf_Exception('Unknown Object reference: ' . $ref);
             }
             $returnObject = $this->_referenceObjects[$ref];
@@ -297,7 +297,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
             if ($storedClass) {
                 $ref = $traitsInfo;
                 if (!isset($this->_referenceDefinitions[$ref])) {
-                    // require_once 'Zend/Amf/Exception.php';
+                    require_once 'Zend/Amf/Exception.php';
                     throw new Zend_Amf_Exception('Unknows Definition reference: '. $ref);
                 }
                 // Populate the reference attributes
@@ -324,7 +324,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
                     $returnObject = new $loader();
                 } else {
                     //user defined typed object
-                    // require_once 'Zend/Amf/Exception.php';
+                    require_once 'Zend/Amf/Exception.php';
                     throw new Zend_Amf_Exception('Typed object not found: '. $className . ' ');
                 }
             }

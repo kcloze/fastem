@@ -18,13 +18,13 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BigInteger.php 23843 2011-04-05 21:55:24Z ralph $
+ * @version    $Id: BigInteger.php 23969 2011-05-03 14:48:31Z ralph $
  */
 
 /**
  * Zend_XmlRpc_Value_Integer
  */
-// require_once 'Zend/XmlRpc/Value/Integer.php';
+require_once 'Zend/XmlRpc/Value/Integer.php';
 
 /**
  * @category   Zend
@@ -40,7 +40,7 @@ class Zend_XmlRpc_Value_BigInteger extends Zend_XmlRpc_Value_Integer
      */
     public function __construct($value)
     {
-        // require_once 'Zend/Crypt/Math/BigInteger.php';
+        require_once 'Zend/Crypt/Math/BigInteger.php';
         $integer = new Zend_Crypt_Math_BigInteger;
         $this->_value = $integer->init($value);
         $this->_type = self::XMLRPC_TYPE_I8;

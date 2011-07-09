@@ -17,23 +17,23 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbAdapter.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DbAdapter.php 23953 2011-05-03 05:47:39Z ralph $
  */
 
 /**
  * @see Zend_Db_Adapter_Abstract
  */
-// require_once "Zend/Db/Adapter/Abstract.php";
+require_once "Zend/Db/Adapter/Abstract.php";
 
 /**
  * @see Zend_Test_DbStatement
  */
-// require_once "Zend/Test/DbStatement.php";
+require_once "Zend/Test/DbStatement.php";
 
 /**
  * @see Zend_Db_Profiler
  */
-// require_once 'Zend/Db/Profiler.php';
+require_once 'Zend/Db/Profiler.php';
 
 /**
  * Testing Database Adapter which acts as a stack for SQL Results

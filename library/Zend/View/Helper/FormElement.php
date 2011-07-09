@@ -17,13 +17,13 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormElement.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: FormElement.php 24201 2011-07-05 16:22:04Z matthew $
  */
 
 /**
  * @see Zend_View_Helper_HtmlElement
  */
-// require_once 'Zend/View/Helper/HtmlElement.php';
+require_once 'Zend/View/Helper/HtmlElement.php';
 
 /**
  * Base helper for form elements.  Extend this, don't use it on its own.
@@ -66,7 +66,7 @@ abstract class Zend_View_Helper_FormElement extends Zend_View_Helper_HtmlElement
         } elseif ($translator instanceof Zend_Translate) {
             $this->_translator = $translator->getAdapter();
         } else {
-            // require_once 'Zend/View/Exception.php';
+            require_once 'Zend/View/Exception.php';
             $e = new Zend_View_Exception('Invalid translator specified');
             $e->setView($this->view);
             throw $e;
@@ -145,6 +145,16 @@ abstract class Zend_View_Helper_FormElement extends Zend_View_Helper_HtmlElement
         } else if ('' !== $info['name']) {
             $info['id'] = trim(strtr($info['name'],
                                      array('[' => '-', ']' => '')), '-');
+        }
+        
+        // Remove NULL name attribute override
+        if (array_key_exists('name', $attribs) && is_null($attribs['name'])) {
+        	unset($attribs['name']);
+        }
+        
+        // Override name in info if specified in attribs
+        if (array_key_exists('name', $attribs) && $attribs['name'] != $info['name']) {
+            $info['name'] = $attribs['name'];
         }
 
         // Determine escaping from attributes

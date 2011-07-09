@@ -16,7 +16,7 @@
  * @package   Zend_Text_Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Table.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version   $Id: Table.php 23953 2011-05-03 05:47:39Z ralph $
  */
 
 /**
@@ -130,7 +130,7 @@ class Zend_Text_Table
         // Check if column widths were set
         // @todo When column widths were not set, assume auto-sizing
         if ($this->_columnWidths === null) {
-            // require_once 'Zend/Text/Table/Exception.php';
+            require_once 'Zend/Text/Table/Exception.php';
             throw new Zend_Text_Table_Exception('You must define the column widths');
         }
 
@@ -188,13 +188,13 @@ class Zend_Text_Table
     public function setColumnWidths(array $columnWidths)
     {
         if (count($columnWidths) === 0) {
-            // require_once 'Zend/Text/Table/Exception.php';
+            require_once 'Zend/Text/Table/Exception.php';
             throw new Zend_Text_Table_Exception('You must supply at least one column');
         }
 
         foreach ($columnWidths as $columnNum => $columnWidth) {
             if (is_int($columnWidth) === false or $columnWidth < 1) {
-                // require_once 'Zend/Text/Table/Exception.php';
+                require_once 'Zend/Text/Table/Exception.php';
                 throw new Zend_Text_Table_Exception('Column ' . $columnNum . ' has an invalid'
                                                     . ' column width');
             }
@@ -258,7 +258,7 @@ class Zend_Text_Table
             $prefix     = 'Zend_Text_Table_Decorator_';
             $pathPrefix = 'Zend/Text/Table/Decorator/';
 
-            // require_once 'Zend/Loader/PluginLoader.php';
+            require_once 'Zend/Loader/PluginLoader.php';
             $this->_pluginLoader = new Zend_Loader_PluginLoader(array($prefix => $pathPrefix));
         }
 
@@ -330,17 +330,18 @@ class Zend_Text_Table
     public function appendRow($row)
     {
         if (!is_array($row) && !($row instanceof Zend_Text_Table_Row)) {
-            // require_once 'Zend/Text/Table/Exception.php';
+            require_once 'Zend/Text/Table/Exception.php';
             throw new Zend_Text_Table_Exception('$row must be an array or instance of Zend_Text_Table_Row');
         }
 
         if (is_array($row)) {
             if (count($row) > count($this->_columnWidths)) {
-                // require_once 'Zend/Text/Table/Exception.php';
+                require_once 'Zend/Text/Table/Exception.php';
                 throw new Zend_Text_Table_Exception('Row contains too many columns');
             }
 
-            // require_once 'Zend/Text/Table/Row.php';
+            require_once 'Zend/Text/Table/Row.php';
+            require_once 'Zend/Text/Table/Column.php';
 
             $data   = $row;
             $row    = new Zend_Text_Table_Row();
@@ -372,7 +373,7 @@ class Zend_Text_Table
     {
         // There should be at least one row
         if (count($this->_rows) === 0) {
-            // require_once 'Zend/Text/Table/Exception.php';
+            require_once 'Zend/Text/Table/Exception.php';
             throw new Zend_Text_Table_Exception('No rows were added to the table yet');
         }
 

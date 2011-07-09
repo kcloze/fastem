@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
- * @version    $Id: Client.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Client.php 24194 2011-07-05 15:53:45Z matthew $
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -24,30 +24,30 @@
 /**
  * @see Zend_Loader
  */
-// require_once 'Zend/Loader.php';
+require_once 'Zend/Loader.php';
 
 
 /**
  * @see Zend_Uri
  */
-// require_once 'Zend/Uri.php';
+require_once 'Zend/Uri.php';
 
 
 /**
  * @see Zend_Http_Client_Adapter_Interface
  */
-// require_once 'Zend/Http/Client/Adapter/Interface.php';
+require_once 'Zend/Http/Client/Adapter/Interface.php';
 
 
 /**
  * @see Zend_Http_Response
  */
-// require_once 'Zend/Http/Response.php';
+require_once 'Zend/Http/Response.php';
 
 /**
  * @see Zend_Http_Response_Stream
  */
-// require_once 'Zend/Http/Response/Stream.php';
+require_once 'Zend/Http/Response/Stream.php';
 
 /**
  * Zend_Http_Client is an implementation of an HTTP client in PHP. The client
@@ -101,6 +101,12 @@ class Zend_Http_Client
      */
     const ENC_URLENCODED = 'application/x-www-form-urlencoded';
     const ENC_FORMDATA   = 'multipart/form-data';
+    
+    /**
+     * Value types for Body key/value pairs
+     */
+    const VTYPE_SCALAR  = 'SCALAR';
+    const VTYPE_FILE    = 'FILE';
 
     /**
      * Configuration array, set using the constructor or using ::setConfig()
@@ -201,6 +207,16 @@ class Zend_Http_Client
      * @var array
      */
     protected $files = array();
+    
+    /**
+     * Ordered list of keys from key/value pair data to include in body
+     * 
+     * An associative array, where each element is of the format:
+     *   '<field name>' => VTYPE_SCALAR | VTYPE_FILE
+     * 
+     * @var array 
+     */
+    protected $body_field_order = array();
 
     /**
      * The client's cookie jar
@@ -272,7 +288,7 @@ class Zend_Http_Client
 
         if (!$uri instanceof Zend_Uri_Http) {
             /** @see Zend_Http_Client_Exception */
-            // require_once 'Zend/Http/Client/Exception.php';
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('Passed parameter is not a valid HTTP URI.');
         }
 
@@ -320,7 +336,7 @@ class Zend_Http_Client
 
         } elseif (! is_array($config)) {
             /** @see Zend_Http_Client_Exception */
-            // require_once 'Zend/Http/Client/Exception.php';
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('Array or Zend_Config object expected, got ' . gettype($config));
         }
 
@@ -351,7 +367,7 @@ class Zend_Http_Client
     {
         if (! preg_match('/^[^\x00-\x1f\x7f-\xff\(\)<>@,;:\\\\"\/\[\]\?={}\s]+$/', $method)) {
             /** @see Zend_Http_Client_Exception */
-            // require_once 'Zend/Http/Client/Exception.php';
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request method.");
         }
 
@@ -403,7 +419,7 @@ class Zend_Http_Client
             // Make sure the name is valid if we are in strict mode
             if ($this->config['strict'] && (! preg_match('/^[a-zA-Z0-9-]+$/', $name))) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("{$name} is not a valid HTTP header name");
             }
 
@@ -501,6 +517,12 @@ class Zend_Http_Client
                 break;
             case 'post':
                 $parray = &$this->paramsPost;
+                if ( $value === null ) {
+                    if (isset($this->body_field_order[$name]))
+                        unset($this->body_field_order[$name]);
+                } else {
+                    $this->body_field_order[$name] = self::VTYPE_SCALAR;
+                }
                 break;
         }
 
@@ -560,7 +582,7 @@ class Zend_Http_Client
             // Check we got a proper authentication type
             if (! defined('self::AUTH_' . strtoupper($type))) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("Invalid or not supported authentication type: '$type'");
             }
 
@@ -596,7 +618,7 @@ class Zend_Http_Client
             $this->cookiejar = null;
         } else {
             /** @see Zend_Http_Client_Exception */
-            // require_once 'Zend/Http/Client/Exception.php';
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('Invalid parameter type passed as CookieJar');
         }
 
@@ -660,7 +682,7 @@ class Zend_Http_Client
 
             if (preg_match("/[=,; \t\r\n\013\014]/", $cookie)) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("Cookie name cannot contain these characters: =,; \t\r\n\013\014 ({$cookie})");
             }
 
@@ -700,7 +722,7 @@ class Zend_Http_Client
         if ($data === null) {
             if (($data = @file_get_contents($filename)) === false) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("Unable to read file '{$filename}' for upload");
             }
 
@@ -718,6 +740,8 @@ class Zend_Http_Client
             'ctype'    => $ctype,
             'data'     => $data
         );
+        
+        $this->body_field_order[$formname] = self::VTYPE_FILE;
 
         return $this;
     }
@@ -782,7 +806,8 @@ class Zend_Http_Client
         $this->paramsPost    = array();
         $this->files         = array();
         $this->raw_post_data = null;
-
+        $this->enctype       = null;
+        
         if($clearAll) {
             $this->headers = array();
             $this->last_request = null;
@@ -840,7 +865,7 @@ class Zend_Http_Client
                 Zend_Loader::loadClass($adapter);
             } catch (Zend_Exception $e) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("Unable to load adapter '$adapter': {$e->getMessage()}", 0, $e);
             }
 
@@ -849,7 +874,7 @@ class Zend_Http_Client
 
         if (! $adapter instanceof Zend_Http_Client_Adapter_Interface) {
             /** @see Zend_Http_Client_Exception */
-            // require_once 'Zend/Http/Client/Exception.php';
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('Passed adapter is not a HTTP connection adapter');
         }
 
@@ -908,7 +933,7 @@ class Zend_Http_Client
                 if ($this->adapter instanceof Zend_Http_Client_Adapter_Interface) {
                     $this->adapter->close();
                 }
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("Could not open temp file {$this->_stream_name}");
         }
 
@@ -926,7 +951,7 @@ class Zend_Http_Client
     {
         if (! $this->uri instanceof Zend_Uri_Http) {
             /** @see Zend_Http_Client_Exception */
-            // require_once 'Zend/Http/Client/Exception.php';
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('No valid URI has been passed to the client');
         }
 
@@ -964,7 +989,7 @@ class Zend_Http_Client
             // check that adapter supports streaming before using it
             if(is_resource($body) && !($this->adapter instanceof Zend_Http_Client_Adapter_Stream)) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception('Adapter does not support streaming');
             }
 
@@ -978,7 +1003,7 @@ class Zend_Http_Client
                     $this->adapter->setOutputStream($stream);
                 } else {
                     /** @see Zend_Http_Client_Exception */
-                    // require_once 'Zend/Http/Client/Exception.php';
+                    require_once 'Zend/Http/Client/Exception.php';
                     throw new Zend_Http_Client_Exception('Adapter does not support streaming');
                 }
             }
@@ -989,7 +1014,7 @@ class Zend_Http_Client
             $response = $this->adapter->read();
             if (! $response) {
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception('Unable to read response, or response is empty');
             }
 
@@ -1019,6 +1044,10 @@ class Zend_Http_Client
             // If we got redirected, look for the Location header
             if ($response->isRedirect() && ($location = $response->getHeader('location'))) {
 
+                // Avoid problems with buggy servers that add whitespace at the
+                // end of some headers (See ZF-11283)
+                $location = trim($location);
+                
                 // Check whether we send the exact same request again, or drop the parameters
                 // and send a GET request
                 if ($response->getStatus() == 303 ||
@@ -1030,7 +1059,7 @@ class Zend_Http_Client
                 }
 
                 // If we got a well formed absolute URI
-                if (Zend_Uri_Http::check($location)) {
+                if (($scheme = substr($location, 0, 6)) && ($scheme == 'http:/' || $scheme == 'https:')) {
                     $this->setHeaders('host', null);
                     $this->setUri($location);
 
@@ -1198,16 +1227,37 @@ class Zend_Http_Client
                     $boundary = '---ZENDHTTPCLIENT-' . md5(microtime());
                     $this->setHeaders(self::CONTENT_TYPE, self::ENC_FORMDATA . "; boundary={$boundary}");
 
-                    // Get POST parameters and encode them
-                    $params = self::_flattenParametersArray($this->paramsPost);
-                    foreach ($params as $pp) {
-                        $body .= self::encodeFormData($boundary, $pp[0], $pp[1]);
+                    // Map the formname of each file to the array index it is stored in
+                    $fileIndexMap = array();
+                    foreach ($this->files as $key=>$fdata ) {
+                        $fileIndexMap[$fdata['formname']] = $key;
                     }
-
-                    // Encode files
-                    foreach ($this->files as $file) {
-                        $fhead = array(self::CONTENT_TYPE => $file['ctype']);
-                        $body .= self::encodeFormData($boundary, $file['formname'], $file['data'], $file['filename'], $fhead);
+                    
+                    // Encode all files and POST vars in the order they were given
+                    foreach ($this->body_field_order as $fieldName=>$fieldType) {
+                        switch ($fieldType) {
+                            case self::VTYPE_FILE:
+                                if (isset($fileIndexMap[$fieldName])) {
+                                    if (isset($this->files[$fileIndexMap[$fieldName]])) {
+                                        $file = $this->files[$fileIndexMap[$fieldName]];
+                                        $fhead = array(self::CONTENT_TYPE => $file['ctype']);
+                                        $body .= self::encodeFormData($boundary, $file['formname'], $file['data'], $file['filename'], $fhead);
+                                    }
+                                }
+                                break;
+                            case self::VTYPE_SCALAR:
+                                if (isset($this->paramsPost[$fieldName])) {
+                                    if (is_array($this->paramsPost[$fieldName])) {
+                                        $flattened = self::_flattenParametersArray($this->paramsPost[$fieldName], $fieldName);
+                                        foreach ($flattened as $pp) {
+                                            $body .= self::encodeFormData($boundary, $pp[0], $pp[1]);
+                                        }
+                                    } else {
+                                        $body .= self::encodeFormData($boundary, $fieldName, $this->paramsPost[$fieldName]);
+                                    }
+                                }
+                                break;
+                        }
                     }
 
                     $body .= "--{$boundary}--\r\n";
@@ -1225,7 +1275,7 @@ class Zend_Http_Client
                     }
 
                     /** @see Zend_Http_Client_Exception */
-                    // require_once 'Zend/Http/Client/Exception.php';
+                    require_once 'Zend/Http/Client/Exception.php';
                     throw new Zend_Http_Client_Exception("Cannot handle content type '{$this->enctype}' automatically." .
                         " Please use Zend_Http_Client::setRawData to send this kind of content.");
                     break;
@@ -1386,7 +1436,7 @@ class Zend_Http_Client
                 // In basic authentication, the user name cannot contain ":"
                 if (strpos($user, ':') !== false) {
                     /** @see Zend_Http_Client_Exception */
-                    // require_once 'Zend/Http/Client/Exception.php';
+                    require_once 'Zend/Http/Client/Exception.php';
                     throw new Zend_Http_Client_Exception("The user name cannot contain ':' in 'Basic' HTTP authentication");
                 }
 
@@ -1401,7 +1451,7 @@ class Zend_Http_Client
 
             default:
                 /** @see Zend_Http_Client_Exception */
-                // require_once 'Zend/Http/Client/Exception.php';
+                require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("Not a supported HTTP authentication type: '$type'");
         }
 

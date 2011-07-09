@@ -17,18 +17,18 @@
  * @subpackage Zend_Translate_Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Adapter.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Adapter.php 24126 2011-06-07 23:00:59Z adamlundrigan $
  */
 
 /**
  * @see Zend_Locale
  */
-// require_once 'Zend/Locale.php';
+require_once 'Zend/Locale.php';
 
 /**
  * @see Zend_Translate_Plural
  */
-// require_once 'Zend/Translate/Plural.php';
+require_once 'Zend/Translate/Plural.php';
 
 /**
  * Basic adapter class for each translation source adapter
@@ -212,6 +212,11 @@ abstract class Zend_Translate_Adapter {
         } else if (!is_array($options)) {
             $options = array('content' => $options);
         }
+        
+        if (!isset($options['content']) || empty($options['content'])) {
+            require_once 'Zend/Translate/Exception.php';
+            throw new Zend_Translate_Exception("Required option 'content' is missing");
+        }
 
         $originate = null;
         if (!empty($options['locale'])) {
@@ -219,7 +224,7 @@ abstract class Zend_Translate_Adapter {
         }
 
         if ((array_key_exists('log', $options)) && !($options['log'] instanceof Zend_Log)) {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('Instance of Zend_Log expected for option log');
         }
 
@@ -232,7 +237,7 @@ abstract class Zend_Translate_Adapter {
                 $options['locale'] = Zend_Locale::findLocale($options['locale']);
             }
         } catch (Zend_Locale_Exception $e) {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language '{$options['locale']}' does not exist", 0, $e);
         }
 
@@ -338,7 +343,7 @@ abstract class Zend_Translate_Adapter {
             } else if ((isset($this->_options[$key]) and ($this->_options[$key] != $option)) or
                     !isset($this->_options[$key])) {
                 if (($key == 'log') && !($option instanceof Zend_Log)) {
-                    // require_once 'Zend/Translate/Exception.php';
+                    require_once 'Zend/Translate/Exception.php';
                     throw new Zend_Translate_Exception('Instance of Zend_Log expected for option log');
                 }
 
@@ -416,7 +421,7 @@ abstract class Zend_Translate_Adapter {
         try {
             $locale = Zend_Locale::findLocale($locale);
         } catch (Zend_Locale_Exception $e) {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist", 0, $e);
         }
 
@@ -605,7 +610,7 @@ abstract class Zend_Translate_Adapter {
         try {
             $options['locale'] = Zend_Locale::findLocale($options['locale']);
         } catch (Zend_Locale_Exception $e) {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language '{$options['locale']}' does not exist", 0, $e);
         }
 
@@ -943,7 +948,7 @@ abstract class Zend_Translate_Adapter {
      */
     public static function clearCache($tag = null)
     {
-        // require_once 'Zend/Cache.php';
+        require_once 'Zend/Cache.php';
         if (self::$_cacheTags) {
             if ($tag == null) {
                 $tag = 'Zend_Translate';

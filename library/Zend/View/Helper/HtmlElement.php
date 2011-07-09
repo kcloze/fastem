@@ -17,13 +17,13 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlElement.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: HtmlElement.php 24201 2011-07-05 16:22:04Z matthew $
  */
 
 /**
  * @see Zend_View_Helper_Abstract
  */
-// require_once 'Zend/View/Helper/Abstract.php';
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * @category   Zend
@@ -76,6 +76,17 @@ abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
     }
 
     /**
+     * Is doctype strict?
+     *
+     * @return boolean
+     */
+    protected function _isStrictDoctype()
+    {
+        $doctype = $this->view->doctype();
+        return $doctype->isStrict();
+    }
+    
+    /**
      * Converts an associative array to a string of tag attributes.
      *
      * @access public
@@ -95,7 +106,7 @@ abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
                 // Don't escape event attributes; _do_ substitute double quotes with singles
                 if (!is_scalar($val)) {
                     // non-scalar data should be cast to JSON first
-                    // require_once 'Zend/Json.php';
+                    require_once 'Zend/Json.php';
                     $val = Zend_Json::encode($val);
                 }
                 $val = preg_replace('/"([^"]*)":/', '$1:', $val);

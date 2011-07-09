@@ -17,13 +17,13 @@
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Redirector.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Redirector.php 23940 2011-05-02 20:20:40Z matthew $
  */
 
 /**
  * @see Zend_Controller_Action_Helper_Abstract
  */
-// require_once 'Zend/Controller/Action/Helper/Abstract.php';
+require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
  * @category   Zend
@@ -92,7 +92,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     {
         $code = (int)$code;
         if ((300 > $code) || (307 < $code) || (304 == $code) || (306 == $code)) {
-            // require_once 'Zend/Controller/Action/Exception.php';
+            require_once 'Zend/Controller/Action/Exception.php';
             throw new Zend_Controller_Action_Exception('Invalid redirect HTTP status code (' . $code  . ')');
         }
 
@@ -294,9 +294,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
             }
         }
 
-        $params['module']     = $module;
-        $params['controller'] = $controller;
-        $params['action']     = $action;
+        $params[$request->getModuleKey()]     = $module;
+        $params[$request->getControllerKey()] = $controller;
+        $params[$request->getActionKey()]     = $action;
 
         $router = $this->getFrontController()->getRouter();
         $url    = $router->assemble($params, 'default', true);
@@ -528,7 +528,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
             return call_user_func_array(array($this, 'gotoSimpleAndExit'), $args);
         }
 
-        // require_once 'Zend/Controller/Action/Exception.php';
+        require_once 'Zend/Controller/Action/Exception.php';
         throw new Zend_Controller_Action_Exception(sprintf('Invalid method "%s" called on redirector', $method));
     }
 }

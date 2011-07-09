@@ -16,17 +16,17 @@
  * @package    Zend_Oauth
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Config.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Config.php 23983 2011-05-03 19:27:35Z ralph $
  */
 
 /** Zend_Oauth */
-// require_once 'Zend/Oauth.php';
+require_once 'Zend/Oauth.php';
 
 /** Zend_Uri */
-// require_once 'Zend/Uri.php';
+require_once 'Zend/Uri.php';
 
 /** Zend_Oauth_Config_Interface */
-// require_once 'Zend/Oauth/Config/ConfigInterface.php';
+require_once 'Zend/Oauth/Config/ConfigInterface.php';
 
 /**
  * @category   Zend
@@ -146,6 +146,13 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
      * @var Zend_Oauth_Token
      */
     protected $_token = null;
+    
+    /**
+     * Define the OAuth realm
+     * 
+     * @var string
+     */
+    protected $_realm = null;
 
     /**
      * Constructor; create a new object with an optional array|Zend_Config
@@ -213,6 +220,9 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
                     break;
                 case 'rsaPublicKey':
                     $this->setRsaPublicKey($value);
+                    break;
+                case 'realm':
+                    $this->setRealm($value);
                     break;
             }
         }
@@ -287,7 +297,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
                 'HMAC-SHA1', 'HMAC-SHA256', 'RSA-SHA1', 'PLAINTEXT'
             ))
         ) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception('Unsupported signature method: '
                 . $method
                 . '. Supported are HMAC-SHA1, RSA-SHA1, PLAINTEXT and HMAC-SHA256');
@@ -322,7 +332,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
                 Zend_Oauth::REQUEST_SCHEME_QUERYSTRING,
             ))
         ) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 '\'' . $scheme . '\' is an unsupported request scheme'
             );
@@ -330,7 +340,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
         if ($scheme == Zend_Oauth::REQUEST_SCHEME_POSTBODY
             && $this->getRequestMethod() == Zend_Oauth::GET
         ) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 'Cannot set POSTBODY request method if HTTP method set to GET'
             );
@@ -381,7 +391,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     public function setCallbackUrl($url)
     {
         if (!Zend_Uri::check($url)) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 '\'' . $url . '\' is not a valid URI'
             );
@@ -410,7 +420,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     public function setSiteUrl($url)
     {
         if (!Zend_Uri::check($url)) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 '\'' . $url . '\' is not a valid URI'
             );
@@ -439,7 +449,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     public function setRequestTokenUrl($url)
     {
         if (!Zend_Uri::check($url)) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 '\'' . $url . '\' is not a valid URI'
             );
@@ -474,7 +484,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     public function setAccessTokenUrl($url)
     {
         if (!Zend_Uri::check($url)) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 '\'' . $url . '\' is not a valid URI'
             );
@@ -521,7 +531,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     public function setAuthorizeUrl($url)
     {
         if (!Zend_Uri::check($url)) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception(
                 '\'' . $url . '\' is not a valid URI'
             );
@@ -573,7 +583,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
                 Zend_Oauth::DELETE,
             ))
         ) {
-            // require_once 'Zend/Oauth/Exception.php';
+            require_once 'Zend/Oauth/Exception.php';
             throw new Zend_Oauth_Exception('Invalid method: ' . $method);
         }
         $this->_requestMethod = $method;
@@ -654,5 +664,27 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     public function getToken()
     {
         return $this->_token;
+    }
+
+    /**
+     * Set OAuth realm
+     *
+     * @param  string $realm
+     * @return Zend_Oauth_Config
+     */
+    public function setRealm($realm)
+    {
+        $this->_realm = $realm;
+        return $this;
+    }
+
+    /**
+     * Get OAuth realm
+     *
+     * @return string
+     */
+    public function getRealm()
+    {
+        return $this->_realm;
     }
 }

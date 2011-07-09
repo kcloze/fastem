@@ -17,18 +17,18 @@
  * @subpackage Amazon_S3
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: S3.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: S3.php 24083 2011-05-30 10:52:55Z ezimuel $
  */
 
 /**
  * @see Zend_Service_Amazon_Abstract
  */
-// require_once 'Zend/Service/Amazon/Abstract.php';
+require_once 'Zend/Service/Amazon/Abstract.php';
 
 /**
  * @see Zend_Crypt_Hmac
  */
-// require_once 'Zend/Crypt/Hmac.php';
+require_once 'Zend/Crypt/Hmac.php';
 
 /**
  * Amazon S3 PHP connection class
@@ -82,7 +82,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception('Invalid endpoint supplied');
         }
         $this->_endpoint = $endpoint;
@@ -126,7 +126,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception("Bucket name \"$bucket\" must be between 3 and 255 characters long");
         }
 
@@ -134,7 +134,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception("Bucket name \"$bucket\" contains invalid characters");
         }
 
@@ -142,7 +142,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception("Bucket name \"$bucket\" cannot be an IP address");
         }
         return true;
@@ -157,14 +157,15 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
     public function createBucket($bucket, $location = null)
     {
         $this->_validBucketName($bucket);
-
+        $headers=array();
         if($location) {
             $data = '<CreateBucketConfiguration><LocationConstraint>'.$location.'</LocationConstraint></CreateBucketConfiguration>';
-        }
-        else {
+            $headers['Content-type']= 'text/plain';
+            $headers['Contne-size']= strlen($data);
+        } else {
             $data = null;
         }
-        $response = $this->_makeRequest('PUT', $bucket, null, array(), $data);
+        $response = $this->_makeRequest('PUT', $bucket, null, $headers, $data);
 
         return ($response->getStatus() == 200);
     }
@@ -273,9 +274,16 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             return false;
         }
 
-        foreach ($objects as $object) {
-            $this->removeObject("$bucket/$object");
+        while (!empty($objects)) {
+            foreach ($objects as $object) {
+                $this->removeObject("$bucket/$object");
+            }
+            $params= array (
+                'marker' => $objects[count($objects)-1]
+            );
+            $objects = $this->getObjectsByBucket($bucket,$params);
         }
+        
         return true;
     }
 
@@ -439,7 +447,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception("Cannot read file $path");
         }
 
@@ -469,7 +477,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception("Cannot open file $path");
         }
 
@@ -578,7 +586,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             /**
              * @see Zend_Service_Amazon_S3_Exception
              */
-            // require_once 'Zend/Service/Amazon/S3/Exception.php';
+            require_once 'Zend/Service/Amazon/S3/Exception.php';
             throw new Zend_Service_Amazon_S3_Exception("Only PUT request supports stream data");
         }
 
@@ -590,7 +598,11 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
             $endpoint->setHost($parts[0].'.'.$endpoint->getHost());
         }
         if (!empty($parts[1])) {
-            $endpoint->setPath('/'.$parts[1]);
+            // ZF-10218, ZF-10122
+            $pathparts = explode('?',$parts[1]);
+            $endpath = $pathparts[0];
+            $endpoint->setPath('/'.$endpath);
+            
         }
         else {
             $endpoint->setPath('/');
@@ -598,16 +610,16 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
                 $path = $parts[0].'/';
             }
         }
-
         self::addSignature($method, $path, $headers);
 
         $client = self::getHttpClient();
 
-        $client->resetParameters();
+        $client->resetParameters(true);
         $client->setUri($endpoint);
         $client->setAuth(false);
         // Work around buglet in HTTP client - it doesn't clean headers
         // Remove when ZHC is fixed
+        /*
         $client->setHeaders(array('Content-MD5'              => null,
                                   'Content-Encoding'         => null,
                                   'Expect'                   => null,
@@ -615,7 +627,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
                                   'x-amz-acl'                => null,
                                   'x-amz-copy-source'        => null,
                                   'x-amz-metadata-directive' => null));
-
+        */
         $client->setHeaders($headers);
 
         if (is_array($params)) {
@@ -629,7 +641,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
                  $headers['Content-type'] = self::getMimeType($path);
              }
              $client->setRawData($data, $headers['Content-type']);
-         }
+         } 
          do {
             $retry = false;
 
@@ -719,6 +731,9 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
         }
         else if (strpos($path, '?torrent') !== false) {
             $sig_str .= '?torrent';
+        }
+        else if (strpos($path, '?versions') !== false) {
+            $sig_str .= '?versions';
         }
 
         $signature = base64_encode(Zend_Crypt_Hmac::compute($this->_getSecretKey(), 'sha1', utf8_encode($sig_str), Zend_Crypt_Hmac::BINARY));
@@ -935,7 +950,7 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
         /**
          * @see Zend_Service_Amazon_S3_Stream
          */
-        // require_once 'Zend/Service/Amazon/S3/Stream.php';
+        require_once 'Zend/Service/Amazon/S3/Stream.php';
 
         stream_register_wrapper($name, 'Zend_Service_Amazon_S3_Stream');
         $this->registerAsClient($name);
