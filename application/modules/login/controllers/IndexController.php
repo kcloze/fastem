@@ -3,15 +3,14 @@ class Login_IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-        var_dump($this->_request->getMethod());
         if ($this->_request->isPost()) {
             $db = $this->_getParam('db');
             $adapter = new Zend_Auth_Adapter_DbTable(
                 $db,
-                'users',
+                'user',
                 'username',
                 'password',
-                'MD5(CONCAT(?, password_salt))'
+                'MD5(CONCAT(?, salt))'
             );
 
             $adapter->setIdentity($this->_request->getPost('username'));
