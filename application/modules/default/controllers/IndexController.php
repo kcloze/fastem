@@ -25,6 +25,8 @@ class IndexController extends Zend_Controller_Action
 	}
 	public function sloadAction() 
 	{
+		$this->_helper->layout->disableLayout();
+
 		if (null != $this->_sl) {
 			if (strstr($this->_sl, ',')) {
 				$ex = explode(',', $this->_sl);
@@ -40,7 +42,7 @@ class IndexController extends Zend_Controller_Action
 					if (is_array($rt)) {
 						$adContent = "<a href=\"" . $rt['url'] . "\" ";
 						if (!empty($rt['tracid'])) {
-						    $adContent .= " onclick=\"javascript:_gaq.push(['_trackPageview','/fastem/" . $rt['tracid'] . ");\"";
+							$adContent .= " onclick=\"javascript:_gaq.push(['_trackPageview','/fastem/" . $rt['tracid'] . ");\"";
 						}
 						$adContent .= ">";
 						$adContent .= "<img src=\"" . $rt['image'] . "\" style=\"width:" . $rt['width'] . "px;height:" . $rt['height'] . "px;border:0px\"></a>";

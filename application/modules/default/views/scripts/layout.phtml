@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台首页</title>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('static/css/style.css'); ?>">
+</head>
+<body>
+<div class="top_identity">
+欢迎登录管理后台, <?php echo $this->identity; ?>&nbsp;
+[<a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'index', 'module'=>'demo')); ?>">DEMO首页</a>]
+	&nbsp;[<a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'auth')); ?>">退出登录</a>]
+</div>
+<h1>管理后台</h1>
+<?php echo $this->render('menu.phtml'); ?>
+<div class="main_content">
+<?php
+if ($this->messages) {
+	foreach ($this->messages as $m) {
+?>
+	<p><?php echo $m; ?></p>
+<?php
+	}
+}
+?>
+<?php echo $this->layout()->content ?>
+</div>
+</body>
+</html>
+

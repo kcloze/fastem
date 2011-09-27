@@ -1,0 +1,53 @@
+body {font-size:14px;color:#222}
+.main {width:98%;margin:0 auto;padding:0}
+.main_menu {width:150px;float:left;padding:5px;padding-left:10px;background:#F7F7F7;border:#98D 1px solid;}
+.main_content {float:left;margin-left:200px;position:absolute}
+dl {font-weight:bold}
+dd, dt {font-weight:normal}
+dl a, dl a:visited{text-decoration:none;color:#1C3D72}
+dl a:hover {color:red;text-decoration:underline}
+table {border-collapse:collapse;}
+table, th, td{border:#ccc 1px solid}
+th, td {font-size:14px;padding:5px;text-align:left}
+th {font-weight:bold;}
+.uix-button {
+	padding: 0 .5em;
+	height: 2.0833em;
+	border: 1px solid #CCC;
+	color: black;
+	background: #F6F6F6;
+	background-image: -moz-linear-gradient(top,#ffffff,#efefef);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
+	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#ffffff,endColorStr=#efefef);
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	overflow: visible;
+}
+
+.uix-button:hover, .uix-button:focus {
+	border-color: #999;
+	background: #F3F3F3;
+	background-image: -moz-linear-gradient(top,#ffffff,#ebebeb);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#ebebeb));
+	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#ffffff,endColorStr=#ebebeb);
+	outline: 0;
+	-moz-box-shadow: 0 0 3px #999;
+	-webkit-box-shadow: 0 0 3px #999;
+	box-shadow: 0 0 3px #999;
+}
+
+.uix-text-input {
+	border:#eee 1px inset;
+	height:22px;
+	font-size:14px;
+	padding-top:1px;
+	box-sizing: border-box;
+	background-color:#FFF;
+}
+
+.top_identity {float:right;}
+

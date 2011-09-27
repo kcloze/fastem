@@ -12,4 +12,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$db = $this->getResource('db');
 		Zend_Registry::set('db', $db);
 	}
+	protected function _initLayout()
+	{
+		Zend_Layout::startMvc();
+	}
 }
