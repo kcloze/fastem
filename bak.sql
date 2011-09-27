@@ -24,6 +24,66 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `fastem` /*!40100 DEFAULT CHARACTER SET
 USE `fastem`;
 
 --
+-- Table structure for table `adbanner`
+--
+
+DROP TABLE IF EXISTS `adbanner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `adbanner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `tracid` varchar(45) DEFAULT NULL,
+  `zoneid` int(11) DEFAULT NULL,
+  `uptime` int(11) DEFAULT NULL,
+  `downtime` int(11) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '0',
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `adbanner`
+--
+
+LOCK TABLES `adbanner` WRITE;
+/*!40000 ALTER TABLE `adbanner` DISABLE KEYS */;
+INSERT INTO `adbanner` VALUES (1,'QuickWeb','http://netroby.gocdn.info/images/quickweb.gif','http://www.netroby.com','quickweb_top_banner',1,NULL,NULL,0,728,90);
+/*!40000 ALTER TABLE `adbanner` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `adzone`
+--
+
+DROP TABLE IF EXISTS `adzone`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `adzone` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `width` varchar(45) DEFAULT NULL,
+  `height` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `adzone`
+--
+
+LOCK TABLES `adzone` WRITE;
+/*!40000 ALTER TABLE `adzone` DISABLE KEYS */;
+INSERT INTO `adzone` VALUES (1,'极致运维-博客-头部-banner','728','90','极致运维-博客-头部-公共banner');
+/*!40000 ALTER TABLE `adzone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -58,4 +118,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-09-26  9:25:07
+-- Dump completed on 2011-09-27  7:26:57
