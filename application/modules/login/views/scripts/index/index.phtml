@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>登陆</title>
 </head>
 <body>
 <?php
 if ($this->tipmsg) {
-    echo '<p>' . $this->tipmsg . '</p>';
+	echo '<p>' . $this->tipmsg . '</p>';
 }
 ?>
 <form action="<?php echo $this->url(); ?>" method="post">
