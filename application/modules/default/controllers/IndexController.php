@@ -19,9 +19,8 @@ class IndexController extends Zend_Controller_Action
 		$auth = Zend_Auth::getInstance();
 		if ($auth->hasIdentity()) {
 			$identity = $auth->getIdentity();
-			var_dump($identity);
 		} else {
-			$this->_redirector->gotoSimple('index', 'index', 'login');
+			$this->_redirector->gotoSimple('index', 'login', 'auth');
 		}
 	}
 	public function sloadAction() 

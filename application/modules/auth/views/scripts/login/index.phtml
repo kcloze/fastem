@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登陆</title>
+</head>
+<body>
+<?php
+if ($this->tipmsg) {
+	echo '<p>' . $this->tipmsg . '</p>';
+}
+?>
+<form action="<?php echo $this->url(); ?>" method="post">
+用户名:<input type="text" name="username"><br />
+密码:<input type="password" name="password"><br />
+<input type="submit" value="提交">
+</form>
+</body>
+</html>
+
+
