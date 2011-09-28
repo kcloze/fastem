@@ -1,0 +1,13 @@
+server {
+	listen 80;
+	server_name s.netroby.com;
+	root /var/www/s.netroby.com/public;
+	index index.html index.php;
+	location / {
+		try_files $uri $uri/ @fastem;
+	}
+	location @fastem {
+		rewrite ^(.*)$ /index.php last;
+	}
+	include /etc/nginx/php.conf;
+}
