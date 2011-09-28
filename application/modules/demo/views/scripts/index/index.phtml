@@ -21,7 +21,7 @@ _gaq.push(['_trackPageview']);
 <script>
 (function() {
 	var _m = document.createElement('script'); _m.type = 'text/javascript'; _m.async = true;
-	_m.src = 'http://s.netroby.com/?sl=' + _sl.toString();
+	_m.src = 'http://<?php echo $_SERVER['SERVER_NAME']; ?>/?sl=' + _sl.toString();
 	var _s = document.getElementsByTagName('script')[0]; _s.parentNode.insertBefore(_m, _s);
 })();
 </script>
