@@ -15,6 +15,7 @@ class AdzoneController extends Zend_Controller_Action {
 		$adzone = $db->fetchAll('SELECT * FROM adzone;');
 		$this->view->adzone = $adzone;
 		$this->view->messages = $this->_flashMessenger->getMessages();
+		$this->view->server_name = $_SERVER['SERVER_NAME'];
 	}
 	public function addAction() {
 		$this->view->messages = $this->_flashMessenger->getMessages();

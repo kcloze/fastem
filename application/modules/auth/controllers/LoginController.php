@@ -26,7 +26,10 @@ class Auth_LoginController extends Zend_Controller_Action
 			$result = $auth->authenticate($adapter);
 
 			if ($result->isValid()) {
+				$cookie = new Zend_Http_Cookie('fastem_inadmin', 'true_in_fastem', $_SERVER['SERVER_NAME'], time() + 7200, '/');
 				$this->_helper->redirector->gotoSimple('index','index','index');
+
+
 				return;
 			} else {
 				$this->view->tipmsg = "Login failed";

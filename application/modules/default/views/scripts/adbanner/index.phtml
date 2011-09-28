@@ -1,0 +1,51 @@
+<?php
+if ($this->adbanner) :
+?>
+<table>
+<tr>
+<th>广告</th>
+<th>图片</th>
+<th>链接地址</th>
+<th>跟踪ID</th>
+<th>广告位</th>
+<th>上线时间</th>
+<th>下线时间</th>
+<th>状态</th>
+<th>操作</th>
+</tr>
+
+<?php
+	foreach ($this->adbanner as $a) :
+?>
+<tr>
+<td><?php echo $a['name']; ?></td>
+<td><img src="<?php echo $a['image']; ?>" style="width:<?php echo $a['width']; ?>;height:<?php echo $a['height']; ?>;border:0;"><br />
+<?php echo $a['width']; ?>px X <?php echo $a['height']; ?>px</td>
+<td><?php echo $a['url']; ?></td>
+<td><?php echo $a['tracid']; ?></td>
+<td><?php echo $a['adzone_name']; ?></td>
+<td><?php echo date('Y-m-d', $a['uptime']); ?></td>
+<td><?php echo date('Y-m-d', $a['downtime']); ?></td>
+<td><?php switch ($a['status']) {
+	         case -2:
+				 echo "已拒绝";
+				 break;
+		     case -1:
+				 echo "未审核";
+				 break;
+			 case 0:
+				 echo "正常";
+				 break;
+			 case 1:
+				 echo "已结束";
+				 break;
+} ?></td>
+<td><a href="<?php echo $this->url(array('action'=>'edit', 'id'=>$a['id'])); ?>">编辑</a>&nbsp;&nbsp;<a href="<?php echo $this->url(array('action'=>'delete', 'id'=>$a['id'])); ?>">删除</a></td>
+</tr>
+<?php
+endforeach;
+?>
+</table>
+<?php 
+endif;
+?>
