@@ -70,7 +70,7 @@ CREATE TABLE `adzone` (
   `height` varchar(45) DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `adzone` (
 
 LOCK TABLES `adzone` WRITE;
 /*!40000 ALTER TABLE `adzone` DISABLE KEYS */;
-INSERT INTO `adzone` VALUES (1,'极致运维-博客-头部-banner','728','90','极致运维-博客-头部-公共banner');
+INSERT INTO `adzone` VALUES (1,'极致运维-博客-头部-banner','728','90','极致运维-博客-头部-公共banner'),(2,'极致运维-博客-右边-banner','300','250','博客右边通栏');
 /*!40000 ALTER TABLE `adzone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,4 +118,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-09-27  7:26:57
+-- Dump completed on 2011-09-28  7:28:19
