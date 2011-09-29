@@ -2,23 +2,23 @@
 <table>
 <tr>
 <th>广告名称</th>
-<td><input name="name"></td>
+<td><input name="name" value="<?php echo $this->adbanner['name']; ?>"></td>
 <td>广告的名称</td>
 </tr>
 <tr>
 <th>广告图片</th>
-<td><input name="image"></td>
+<td><input name="image" value="<?php echo $this->adbanner['image']; ?>"></td>
 <td>广告图片物料</td>
 </tr>
 <tr>
 <th>链接地址</th>
-<td><input name="url"></td>
+<td><input name="url" value="<?php echo $this->adbanner['url']; ?>"></td>
 <td>广告的链接地址</td>
 </tr>
 
 <tr>
 <th>跟踪ID</th>
-<td><input name="tracid"></td>
+<td><input name="tracid" value="<?php echo $this->adbanner['tracid']; ?>"></td>
 <td>跟踪广告用的，适用于谷歌流量统计</td>
 </tr>
 
@@ -27,7 +27,7 @@
 <td><select name="zoneid">
 <?php foreach ($this->adzone as $a):
 ?>
-<option value="<?php echo $a['id']; ?>"><?php echo $a['name'] . '(' . $a['width'] . ' X ' . $a['height'] . ' px)'; ?></option>
+<option value="<?php echo $a['id']; ?>" <?php if ($a['id'] == $this->adbanner['zoneid']) echo 'selected="selected"'; ?>><?php echo $a['name'] . '(' . $a['width'] . ' X ' . $a['height'] . ' px)'; ?></option>
 <?php endforeach; ?>
 </select></td>
 <td>广告投放的位置</td>
@@ -35,34 +35,34 @@
 
 <tr>
 <th>上线时间</th>
-<td><input name="uptime" value="<?php echo date('Y-m-d'); ?>"></td>
+<td><input name="uptime" value="<?php echo date('Y-m-d', $this->adbanner['downtime']); ?>"></td>
 <td>广告上线的时间</td>
 </tr>
 <tr>
 <th>下线时间</th>
-<td><input name="downtime" value="<?php echo date('Y-m-d', strtotime('+1 days')); ?>"></td>
+<td><input name="downtime" value="<?php echo date('Y-m-d', $this->adbanner['downtime']); ?>"></td>
 <td>广告下线时间</td>
 </tr>
 <tr>
 <th>广告状态</th>
 <td><select name="status">
-<option value="-2"> 已拒绝</option>
-<option value="-1"> 未审核</option>
-<option value="0" selected="selected"> 正常</option>
-<option value="1">已结束</option>
+<option value="-2" <?php if ($this->adbanner['status'] == -2) echo 'selected="selected"'; ?>> 已拒绝</option>
+<option value="-1" <?php if ($this->adbanner['status'] == -1) echo 'selected="selected"'; ?>> 未审核</option>
+<option value="0"  <?php if ($this->adbanner['status'] == 0) echo 'selected="selected"'; ?>> 正常</option>
+<option value="1" <?php if ($this->adbanner['status'] == 1) echo 'selected="selected"'; ?>>已结束</option>
 </select></td>
 <td>广告状态</td>
 </tr>
 <tr>
 <th>广告类型</th>
 <td><select name="adtype">
-<option value="0" selected="selected"> 图片广告</option>
-<option value="1">iframe广告</option>
+<option value="0" <?php if ($this->adbanner['adtype'] == 0) echo 'selected="selected"'; ?>> 图片广告</option>
+<option value="1" <?php if ($this->adbanner['adtype'] == 1) echo 'selected="selected"'; ?>>iframe广告</option>
 </select></td>
 <td>广告类型，是Iframe还是图片广告</td>
 </tr>
 <tr>
-<th></th>
+<th><input type="hidden" name="id" value="<?php echo $this->adbanner['id']; ?>"></th>
 <td><input type="submit" value="提交"></td>
 <td></td>
 </tr>

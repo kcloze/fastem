@@ -42,8 +42,9 @@ CREATE TABLE `adbanner` (
   `status` tinyint(4) DEFAULT '0',
   `width` int(11) DEFAULT NULL,
   `height` int(11) DEFAULT NULL,
+  `adtype` tinyint(4) DEFAULT '0' COMMENT '0: image\n1: iframe',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +53,7 @@ CREATE TABLE `adbanner` (
 
 LOCK TABLES `adbanner` WRITE;
 /*!40000 ALTER TABLE `adbanner` DISABLE KEYS */;
-INSERT INTO `adbanner` VALUES (1,'QuickWeb','http://netroby.gocdn.info/images/quickweb.gif','http://www.netroby.com','quickweb_top_banner',1,NULL,NULL,0,728,90),(2,'测试广告','http://netroby.gocdn.info/images/quickweb.gif','http://www.netroby.com','/fastem/mlgb',2,1314374400,1320940800,0,300,250);
+INSERT INTO `adbanner` VALUES (1,'QuickWeb','http://netroby.gocdn.info/images/quickweb.gif','http://www.netroby.com','quickweb_top_banner',1,-28800,1319731200,-1,728,90,0),(4,'亚马逊-728x90','#','http://rcm-cn.amazon.cn/e/cm?t=netroby-23&o=28&p=48&l=ez&f=ifr&f=ifr','#',1,1317225600,1317312000,0,728,90,1);
 /*!40000 ALTER TABLE `adbanner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +80,7 @@ CREATE TABLE `adzone` (
 
 LOCK TABLES `adzone` WRITE;
 /*!40000 ALTER TABLE `adzone` DISABLE KEYS */;
-INSERT INTO `adzone` VALUES (1,'极致运维-博客-头部-banner','728','90','极致运维-博客-头部-公共banner'),(2,'极致运维-博客-右边-banner','300','250','博客右边通栏');
+INSERT INTO `adzone` VALUES (1,'极致运维-博客-头部-banner','728','90','极致运维-博客-头部-banner');
 /*!40000 ALTER TABLE `adzone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,4 +119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-09-28  9:57:08
+-- Dump completed on 2011-09-29  6:02:02

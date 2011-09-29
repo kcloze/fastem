@@ -1,0 +1,29 @@
+<form action="<?php echo $this->url(array('action'=>'saveedit')); ?>" method="post">
+<table>
+<tr>
+<th>广告位</th>
+<td><input name="name" value="<?php echo $this->adzone['name']; ?>"></td>
+<td>广告位的名称</td>
+</tr>
+<tr>
+<th>广告位宽度</th>
+<td><input name="width" value="<?php echo $this->adzone['width']; ?>"></td>
+<td>广告位的宽度</td>
+</tr>
+<tr>
+<th>广告位高度</th>
+<td><input name="height" value="<?php echo $this->adzone['height']; ?>"></td>
+<td>广告位的高度</td>
+</tr>
+<tr>
+<th>广告位详情</th>
+<td><textarea name="description" style="width:300px;height:150px;border:#CCC 1px solid;"><?php echo $this->adzone['description']; ?></textarea></td>
+<td>广告位的详细说明</td>
+</tr>
+<tr>
+<th><input type="hidden" name="id" value="<?php echo $this->adzone['id']; ?>"></th>
+<td><input type="submit" value="提交"></td>
+<td></td>
+</tr>
+</table>
+</form>
