@@ -9,7 +9,7 @@
 <div class="top_identity">
 欢迎登录管理后台, <?php echo $this->identity; ?>&nbsp;
 [<a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'index', 'module'=>'demo')); ?>">DEMO首页</a>]
-	&nbsp;[<a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'auth')); ?>">退出登录</a>]
+	&nbsp;[<a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'logout', 'module'=>'auth')); ?>">退出登录</a>]
 </div>
 <h1>管理后台</h1>
 <?php echo $this->render('menu.phtml'); ?>
