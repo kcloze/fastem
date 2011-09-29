@@ -16,8 +16,10 @@ _gaq.push(['_trackPageview']);
 </script>
 </head>
 <body>
-<div id="_sl_1"></div>
-<script>_sl.push(1);</script>
+<?php foreach ($this->adzone as $a) : ?>
+<div id="_sl_<?php echo $a['id']; ?>"></div>
+<script>_sl.push(<?php echo $a['id']; ?>);</script>
+<?php endforeach; ?>
 <script>
 (function() {
 	var _m = document.createElement('script'); _m.type = 'text/javascript'; _m.async = true;

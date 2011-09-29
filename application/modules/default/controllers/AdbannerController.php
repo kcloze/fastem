@@ -57,6 +57,7 @@ class AdbannerController extends Zend_Controller_Action {
 		$uptime = strtotime($this->_getParam('uptime'));
 		$downtime = strtotime($this->_getParam('downtime'));
 		$status = intval($this->_getParam('status'));
+		$adtype = intval($this->_getParam('adtype'));
 		$data = array(
 			'name' => $name,
 			'image' => $image,
@@ -68,6 +69,7 @@ class AdbannerController extends Zend_Controller_Action {
 			'status' => $status,
 			'width' => $width,
 			'height' => $height,
+			'adtype' => $adtype
 		);
 		$db = Zend_Registry::get('db');
 		$db->insert('adbanner', $data);

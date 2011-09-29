@@ -40,19 +40,39 @@ class IndexController extends Zend_Controller_Action
 				if (!empty($zid)) {
 					$rt = $db->fetchRow("SELECT * FROM adbanner WHERE zoneid=" . $db->quote($zid) . " AND   status='0';");
 					if (is_array($rt)) {
-						$adContent = "<a href=\"" . $rt['url'] . "\" ";
-						if (!empty($rt['tracid'])) {
-							$adContent .= " onclick=\"javascript:_gaq.push(['_trackPageview','/fastem/" . $rt['tracid'] . ");\"";
+						switch ($rt['adtype']) {
+						case 0:
+							$adStr .= $this->_buildImageLink($rt);
+							break;
+						case 1:
+							$adStr .= $this->_buildIframeLink($rt);
+							break;
 						}
-						$adContent .= ">";
-						$adContent .= "<img src=\"" . $rt['image'] . "\" style=\"width:" . $rt['width'] . "px;height:" . $rt['height'] . "px;border:0px\"></a>";
-						$adStr .= "__g('_sl_" . $rt['zoneid'] . "').innerHTML='". addslashes($adContent) . "';";
-						unset($adContent);
+
 					}
 				}
 			}
 			$this->view->adstr = $adStr;
 		}
+	}
+
+	private function _buildImageLink($d) {
+		$adContent = "<a href=\"" . $d['url'] . "\" ";
+		if (!empty($rt['tracid'])) {
+			$adContent .= " onclick=\"javascript:_gaq.push(['_trackPageview','/fastem/" . $d['tracid'] . ");\"";
+		}
+		$adContent .= ">";
+		$adContent .= "<img src=\"" . $d['image'] . "\" style=\"width:" . $d['width'] . "px;height:" . $d['height'] . "px;border:0px\"></a>";
+		$adStr = "__g('_sl_" . $d['zoneid'] . "').innerHTML='". addslashes($adContent) . "';";
+		unset($adContent);
+		return $adStr;
+	}
+
+	private function _buildIframeLink($d) {
+		$adContent = "<iframe src=\"" . $d['url'] . "\" width=\"" . $d['width'] . "\" height=\"" . $d['height'] . "\" scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" border=\"0\" frameborder=\"0\" style=\"border:none\"></iframe>";
+        $adStr = "__g('_sl_" . $d['zoneid'] . "').innerHTML='". addslashes($adContent) . "';";
+		unset($adContent);
+		return $adStr;
 	}
 
 }
