@@ -53,6 +53,13 @@ class IndexController extends Zend_Controller_Action
 				}
 			}
 			$this->view->adstr = $adStr;
+			$response = $this->getResponse();
+			$expireTime = 600;
+			$response->setHeader('Cache-Control', 'max-age=' . $expireTime);
+            $response->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $expireTime) . ' GMT');
+
+		} else {
+			exit();
 		}
 	}
 
