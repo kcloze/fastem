@@ -65,7 +65,7 @@ class IndexController extends Zend_Controller_Action
 
 	private function _buildImageLink($d) {
 		$adContent = "<a href=\"" . $d['url'] . "\" ";
-		if (!empty($rt['tracid'])) {
+		if (!empty($d['tracid'])) {
 			$adContent .= " onclick=\"javascript:_gaq.push(['_trackPageview','/fastem/" . $d['tracid'] . ");\"";
 		}
 		$adContent .= ">";
