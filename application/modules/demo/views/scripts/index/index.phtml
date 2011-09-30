@@ -17,7 +17,7 @@ _gaq.push(['_trackPageview']);
 </head>
 <body>
 <?php foreach ($this->adzone as $a) : ?>
-<div id="_sl_<?php echo $a['id']; ?>"></div>
+<div id="_sl_<?php echo $a['id']; ?>" style="margin:0px;padding:0px;border:0px;width:<?php echo $a['width']; ?>px;height:<?php echo $a['height']; ?>px"></div>
 <script>_sl.push(<?php echo $a['id']; ?>);</script>
 <?php endforeach; ?>
 <script>
