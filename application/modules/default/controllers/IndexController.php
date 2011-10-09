@@ -4,10 +4,12 @@ class IndexController extends Zend_Controller_Action
 
 	private $_sl = null;
 	private $_redirector = null;
+	private $_flashMessenger = null;
 
 	public function init()
 	{
 		$this->_redirector = $this->_helper->getHelper('Redirector');
+		$this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
 		if ($this->_hasParam('sl')) {
 			$this->_sl = $this->_getParam('sl');
 			$this->_forward('sload');
@@ -19,6 +21,7 @@ class IndexController extends Zend_Controller_Action
 		$auth = Zend_Auth::getInstance();
 		if ($auth->hasIdentity()) {
 			$identity = $auth->getIdentity();
+			$this->view->messages = $this->_flashMessenger->getMessages();
 		} else {
 			$this->_redirector->gotoSimple('index', 'login', 'auth');
 		}

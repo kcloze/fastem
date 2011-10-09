@@ -4,18 +4,39 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
 <title>登陆</title>
+<style type="text/css">
+body {font-size:12px;font-family:arial;margin:0;padding:0;text-align:center}
+form, table, p {margin:0;padding:0}
+div.login_form {width:250px;height:108px;border:#E1E1E1 2px outset;padding:5px;margin:100px auto}
+input.textin {border:#E1E1E1 1px inset;padding-top:2px}
+p.err_msg {color:red}
+
+</style>
 </head>
 <body>
-<?php
-if ($this->tipmsg) {
-	echo '<p>' . $this->tipmsg . '</p>';
+
+<div class="login_form">
+<form action="<?php echo $this->url(); ?>" method="post">
+<table>
+<tr>
+<td>用户:</td><td><input type="text" name="username" class="textin"></td>
+</tr>
+<tr>
+<td>密码:</td><td><input type="password" name="password" class="textin"></td>
+</tr>
+<tr>
+<td></td><td><input type="submit" value="登陆"></td>
+</tr>
+</table>
+</form>
+<?php 
+if ($this->messages) {
+	foreach ($this->messages as $msg) {
+		echo '<p class="err_msg">' . $msg . '</p>';
+	}
 }
 ?>
-<form action="<?php echo $this->url(); ?>" method="post">
-用户名:<input type="text" name="username"><br />
-密码:<input type="password" name="password"><br />
-<input type="submit" value="提交">
-</form>
+</div>
 </body>
 </html>
 
