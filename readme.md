@@ -37,3 +37,17 @@ FastEM 项目招募
 3. 提交需求建议，请发送邮件至：[netroby@netroby.com](mailto:netroby@netroby.com)
 4. 提交BUG反馈，请在这里提交：[https://github.com/netroby/fastem/issues](https://github.com/netroby/fastem/issues)
 5. 帮助撰写维基， 请关注：[https://github.com/netroby/fastem/wiki](https://github.com/netroby/fastem/wiki)
+
+
+
+please donate us, help us improve this project.
+
+请捐赠我们，帮助我们改进这个项目
+
+
+[![donate via alipay](http://www.netroby.com/paygate/alipay/images/donate_alipay.jpg "donate via alipay")](http://www.netroby.com/paygate/alipay/article.donate.php "donate via alipay")
+
+
+[![donate via paypal](https://www.paypal.com/en_US/i/btn/x-click-but04.gif "donate via paypal")](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=netroby%40netroby%2ecom&lc=US&item_name=netroby%2ecom&amount=0%2e99&currency_code=USD&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest "donate via paypal")
+
+
