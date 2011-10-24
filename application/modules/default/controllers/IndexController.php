@@ -70,7 +70,7 @@ class IndexController extends Zend_Controller_Action
 	private function _buildImageLink($d) {
 		$adContent = "<a href=\"" . $d['url'] . "\" ";
 		if (!empty($d['tracid'])) {
-			$adContent .= " onclick=\"javascript:_gaq.push(['_trackEvent','" . $d['name'] . "', 'clicked', '" . $d['url'] . "']);\"";
+			$adContent .= " onclick=\"javascript:_gaq.push(['_trackEvent','" . $d['name'] . "', 'clicked', '" . $d['url'] . "']);\" ";
 		}
 		$adContent .= " target=\"_blank\">";
 		$adContent .= "<img src=\"" . $d['image'] . "\" style=\"width:" . $d['width'] . "px;height:" . $d['height'] . "px;border:0px\"></a>";
