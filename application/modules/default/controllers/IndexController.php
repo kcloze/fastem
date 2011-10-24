@@ -72,7 +72,7 @@ class IndexController extends Zend_Controller_Action
 		if (!empty($d['tracid'])) {
 			$adContent .= " onclick=\"javascript:_gaq.push(['_trackEvent','" . $d['name'] . "', 'clicked', '" . $d['url'] . "']);\"";
 		}
-		$adContent .= ">";
+		$adContent .= " target=\"_blank\">";
 		$adContent .= "<img src=\"" . $d['image'] . "\" style=\"width:" . $d['width'] . "px;height:" . $d['height'] . "px;border:0px\"></a>";
 		$adStr = "__g('_sl_" . $d['zoneid'] . "').innerHTML='". addslashes($adContent) . "';";
 		unset($adContent);
