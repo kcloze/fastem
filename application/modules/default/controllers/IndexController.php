@@ -57,10 +57,11 @@ class IndexController extends Zend_Controller_Action
 			}
 			$this->view->adstr = $adStr;
 			$response = $this->getResponse();
-			$expireTime = 600;
-			$response->setHeader('Content-Type', 'text/javascript;charset=UTF-8');
-			$response->setHeader('Cache-Control', 'max-age=' . $expireTime);
-            $response->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $expireTime) . ' GMT');
+			$expireTime = 6000;
+			$response->setHeader('Content-Type', 'text/javascript;charset=UTF-8', TRUE);
+			$response->setHeader('Pragma', 'public', TRUE);
+			$response->setHeader('Cache-Control', 'max-age=' . $expireTime, TRUE);
+            $response->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $expireTime) . ' GMT', TRUE);
 
 		} else {
 			exit();
@@ -73,7 +74,7 @@ class IndexController extends Zend_Controller_Action
 			$adContent .= " onclick=\"javascript:_gaq.push(['_trackEvent','" . $d['name'] . "', 'clicked', '" . $d['url'] . "']);\" ";
 		}
 		$adContent .= " target=\"_blank\">";
-		$adContent .= "<img src=\"" . $d['image'] . "\" style=\"width:" . $d['width'] . "px;height:" . $d['height'] . "px;border:0px\"></a>";
+		$adContent .= "<img src=\"" . $d['image'] . "\" width=\"" . $d['width'] . "\" height=\"" . $d['height'] . "\" style=\"border:0px\"></a>";
 		$adStr = "__g('_sl_" . $d['zoneid'] . "').innerHTML='". addslashes($adContent) . "';";
 		unset($adContent);
 		return $adStr;
