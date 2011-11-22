@@ -1,6 +1,32 @@
+<style>
+.left_menu {width:100px;height:100px;float:left;border:#CCC 1px solid;margin-right:5px;}
+.left_menu #hover {background:#DDD}
+.left_menu ul {list-style-type:none;padding:0px;margin:0px;}
+.left_menu li {padding-left:24px}
+.left_menu a {display:block}
+
+</style>
+<div class="left_menu">
+<ul>
+<li <?php if (empty($this->qFilter)) echo ' id="hover"'; ?>><a href="<?php echo $this->url($this->urlArr, NULL, TRUE); ?>">全部</a></li>
+<li <?php if ('declined' == $this->qFilter) echo ' id="hover"'; ?>><a href="<?php echo $this->url($this->urlArr, NULL, TRUE); ?>?filter=declined">已拒绝</a></li>
+<li <?php if ('pending' == $this->qFilter) echo ' id="hover"'; ?>><a href="<?php echo $this->url($this->urlArr, NULL, TRUE); ?>?filter=pending">未审核</a></li>
+<li <?php if ('normal' == $this->qFilter) echo ' id="hover"'; ?>><a href="<?php echo $this->url($this->urlArr, NULL, TRUE); ?>?filter=normal">正常</a></li>
+<li <?php if ('expired' == $this->qFilter) echo ' id="hover"'; ?>><a href="<?php echo $this->url($this->urlArr, NULL, TRUE); ?>?filter=expired">已结束</a></li>
+</div>
 <?php
 if ($this->adbanner) :
 ?>
+	<script>
+	function showPreview(id) {
+		var d = document.getElementById(id);
+		d.style.display = 'inline';
+	}
+    function hidePreview(id) {
+		var d = document.getElementById(id);
+		d.style.display = 'none';
+	}
+	</script>
 <table>
 <tr>
 <th>广告</th>
@@ -16,13 +42,14 @@ if ($this->adbanner) :
 	foreach ($this->adbanner as $a) :
 ?>
 <tr>
-<td><strong><?php echo $a['name']; ?></strong> <br />
+<td><strong><?php echo $a['name']; ?></strong> [<a href="#" onclick="showPreview('pre_<?php echo $a['id']; ?>');return false;">展开预览</a>] [<a href="#" onclick="hidePreview('pre_<?php echo $a['id']; ?>');return false;">隐藏预览</a>] <br />
+<div id="pre_<?php echo $a['id']; ?>" style="display:none">
 <?php		if ($a['adtype'] == 0) {  ?>
 <img src="<?php echo $a['image']; ?>" style="width:<?php echo $a['width']; ?>;height:<?php echo $a['height']; ?>;border:0;">
 <?php } else if ($a['adtype'] == 1) { ?>
 <iframe src="<?php echo $a['url']; ?>" width="<?php echo $a['width']; ?>" height="<?php echo $a['height']; ?>" scrolling="no" marginwidth="0" marginheight="0" border="0" frameborder="0" style="border:none;"></iframe>
 <?php } ?>
-
+</div>
 <br />
 <?php echo $a['width']; ?> X <?php echo $a['height']; ?>px
 &nbsp;&nbsp;链接:

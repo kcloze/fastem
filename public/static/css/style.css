@@ -1,7 +1,7 @@
 body {font-size:14px;color:#222}
 .main {width:98%;margin:0 auto;padding:0}
 .main_menu {width:150px;float:left;padding:5px;padding-left:10px;background:#F7F7F7;border:#98D 1px solid;}
-.main_content {float:left;margin-left:200px;position:absolute}
+.main_content {float:left;margin-left:185px;position:absolute}
 dl {font-weight:bold}
 dd, dt {font-weight:normal}
 dl a, dl a:visited{text-decoration:none;color:#1C3D72}

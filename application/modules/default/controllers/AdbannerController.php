@@ -11,10 +11,30 @@ class AdbannerController extends Zend_Controller_Action {
 		}
 	}
 	public function indexAction() {
+		$qFilter = $this->_request->getQuery('filter');
+		if (!empty($qFilter)) {
+			$sCode = array(
+				'declined' => -2,
+				'pending' => -1,
+				'normal' => 0,
+				'expired' => 1
+			);
+			if (in_array($qFilter, $sCode)) {
+				$status = $sCode[$qFilter];
+			}
+		}
 		$db = Zend_Registry::get('db');
-		$adbanner = $db->fetchAll('SELECT a.*, b.name AS adzone_name FROM adbanner AS a LEFT JOIN adzone AS b ON a.zoneid=b.id;');
+		$sql = 'SELECT a.*, b.name AS adzone_name FROM adbanner AS a LEFT JOIN adzone AS b ON a.zoneid=b.id ';
+		if (isset($status)) {
+			$sql .= " WHERE a.status = $status; ";
+		} else {
+			$sql .= ";";
+		}
+		$adbanner = $db->fetchAll($sql);
 		$this->view->adbanner = $adbanner;
 		$this->view->messages = $this->_flashMessenger->getMessages();
+		$this->view->qFilter = $qFilter;
+		$this->view->urlArr = array('action'=>'index', 'controller'=>'adbanner', 'module'=>'default');
 	}
 	public function addAction() {
 		$sql = "SELECT * FROM adzone;";

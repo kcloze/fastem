@@ -1,10 +1,10 @@
 <div class="main_menu">
-<dl><a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'index')); ?>">面板首页</a></dl>
-<dl><a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'adzone')); ?>">广告容器</a>
-<dd><a href="<?php echo $this->url(array('action'=>'add', 'controller'=>'adzone')); ?>">新增广告容器</a></dd>
+<dl><a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'index', 'module'=>'default'), NULL, TRUE); ?>">面板首页</a></dl>
+<dl><a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'adzone', 'module'=>'default'), NULL, TRUE); ?>">广告容器</a>
+<dd><a href="<?php echo $this->url(array('action'=>'add', 'controller'=>'adzone', 'module'=>'default'), NULL, TRUE); ?>">新增广告容器</a></dd>
 </dl>
-<dl><a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'adbanner')); ?>">广告订单</a>
-<dd><a href="<?php echo $this->url(array('action'=>'add', 'controller'=>'adbanner')); ?>">新增广告订单</a></dd>
+<dl><a href="<?php echo $this->url(array('action'=>'index', 'controller'=>'adbanner', 'module'=>'default'), NULL, TRUE); ?>">广告订单</a>
+<dd><a href="<?php echo $this->url(array('action'=>'add', 'controller'=>'adbanner', 'module'=>'default'), NULL, TRUE); ?>">新增广告订单</a></dd>
 </dl>
 </div>
 
